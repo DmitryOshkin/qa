@@ -17,15 +17,15 @@ public class PracticeFormTests {
 
     @Test
     void fillPracticeFormTest() {
-        //Открываем форму
+        // Открываем форму
         open("https://demoqa.com/automation-practice-form");
         // Заполняем имя
         $("#firstName").setValue("Dmitriy");
         // Заполняем фамилию
         $("#lastName").setValue("Oshkin");
-        //Заполняем email
+        // Заполняем email
         $("#userEmail").setValue("userEmail@gmail.com");
-        //  Выбрать пол
+        // Указываем пол
         $x("//label[contains(text(),'Male')]").click();
         // Заполняем номер телефона
         $("#userNumber").setValue("9876543210");
@@ -42,12 +42,12 @@ public class PracticeFormTests {
         // Заполняем хобби
         $("[for='hobbies-checkbox-1']").click();
         $("[for='hobbies-checkbox-3']").click();
-        //Прикрепляем фото
+        // Прикрепляем фото
         File picture = new File("src/test/resources/sketching8.jpg");
         $("#uploadPicture").uploadFile(picture);
         // Заполняем адрес
         $("#currentAddress").setValue("Country City Street number");
-        //Заполняем Штат и город
+        // Заполняем Штат и город
         $("#react-select-3-input").setValue("Haryana").pressEnter();
         $("#react-select-4-input").setValue("Panipat").pressEnter();
         String pngFileName = screenshot("my_file_name");
