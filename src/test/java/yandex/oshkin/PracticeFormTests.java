@@ -1,15 +1,19 @@
 package yandex.oshkin;
 
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTests {
-//    @BeforeAll
-//    static void beforeAll() {
-//        Configuration.browserSize ="1920x1080";
-//    }
+    @BeforeAll
+    static void beforeAll() {
+        Configuration.browserSize = "1920x1080";
+    }
 
     @Test
     void fillPracticeFormTest() {
@@ -31,7 +35,7 @@ public class PracticeFormTests {
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__year-select").click();
         $(".react-datepicker__year-select").selectOption("1988");
-		$(".react-datepicker__day.react-datepicker__day--005").click();
+        $(".react-datepicker__day.react-datepicker__day--005").click();
         // Заполняем предмет
         $("#subjectsInput").setValue("Physics").pressEnter();
         $("#subjectsInput").setValue("Maths").pressEnter();
@@ -39,23 +43,23 @@ public class PracticeFormTests {
         $("[for='hobbies-checkbox-1']").click();
         $("[for='hobbies-checkbox-3']").click();
         //Прикрепляем фото
-        $("#uploadPicture").uploadFile();
+        File picture = new File("src/test/resources/sketching8.jpg");
+        $("#uploadPicture").uploadFile(picture);
         // Заполняем адрес
-        $("#currentAddress").setValue("Страна Город Улица Дом Квартира");
+        $("#currentAddress").setValue("Country City Street number");
         //Заполняем Штат и город
         $("#react-select-3-input").setValue("Haryana").pressEnter();
         $("#react-select-4-input").setValue("Panipat").pressEnter();
-
+        String pngFileName = screenshot("my_file_name");
         $("#submit").scrollTo().click();
-        $("#submit").scrollTo().click();
-//       $("#output #name").shouldHave(text("Some name"));
-//       $("#output").$("#email").shouldHave(text("111@333.com"));
-//       $("#output").$("#currentAddress").shouldHave(text("Some address"));
-//       $("#output").$("#permanentAddress").shouldHave(text("Another address"));
+        // Проверяем результат работы формы
+        $("[class='modal-body']").shouldHave(text("Dmitriy Oshkin"), text("userEmail@gmail.com"),
+                text("Male"), text("9876543210"), text("05 June,1988"), text("Physics, Maths"),
+                text("Sports, Music"), text("sketching8.jpg"), text("Country City Street number"),
+                text("Haryana Panipat"));
+        String pngFileName2 = screenshot("my_file_name2");
 
 
-//        $("#output").shouldHave(text("Some name"),text("111@333.com"),
-//               text("Some address"),text("Another address"));
     }
 
 }
