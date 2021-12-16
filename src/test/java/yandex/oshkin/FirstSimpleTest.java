@@ -23,6 +23,7 @@ public class FirstSimpleTest {
     static void afterAll() {
         System.out.println("@AfterAll method!");
     }
+
     @DisplayName("Простенький тест на assertEquals")
     @Test
     void firstTest() {
@@ -36,7 +37,6 @@ public class FirstSimpleTest {
         System.out.println("        Easy test on assertTrue");
         Assertions.assertTrue(7 > 6);
     }
-
 
 
 }
