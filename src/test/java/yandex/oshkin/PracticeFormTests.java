@@ -53,9 +53,16 @@ public class PracticeFormTests {
         String pngFileName = screenshot("my_file_name");
         $("#submit").scrollTo().click();
         // Проверяем результат работы формы
-        $("[class='modal-body']").shouldHave(text("Dmitriy Oshkin"), text("userEmail@gmail.com"),
-                text("Male"), text("9876543210"), text("05 June,1988"), text("Physics, Maths"),
-                text("Sports, Music"), text("sketching8.jpg"), text("Country City Street number"),
+        $("[class='modal-body']").shouldHave(
+                text("Dmitriy Oshkin"),
+                text("userEmail@gmail.com"),
+                text("Male"),
+                text("9876543210"),
+                text("05 June,1988"),
+                text("Physics, Maths"),
+                text("Sports, Music"),
+                text("sketching8.jpg"),
+                text("Country City Street number"),
                 text("Haryana Panipat"));
         String pngFileName2 = screenshot("my_file_name2");
 
