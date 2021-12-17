@@ -21,6 +21,8 @@ public class PracticeFormTests {
     void fillPracticeFormTest() {
         // Открываем форму
         open("/automation-practice-form");
+        //Проверяем что форма та
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         // Заполняем имя
         $("#firstName").setValue("Dmitriy");
         // Заполняем фамилию
@@ -55,7 +57,7 @@ public class PracticeFormTests {
         $("#currentAddress").setValue("Country City Street number");
         // Заполняем Штат и город
         $("#react-select-3-input").setValue("Haryana").pressEnter();
-        $("#city").click();
+        $("#city").scrollTo().click();
         $("#stateCity-wrapper").$(byText("Panipat")).click();
         //$("#react-select-4-input").setValue("Panipat").pressEnter();
         String pngFileName = screenshot("my_file_name");
