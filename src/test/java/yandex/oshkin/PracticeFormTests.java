@@ -7,18 +7,20 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormTests {
     @BeforeAll
     static void beforeAll() {
+        Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
     }
 
     @Test
     void fillPracticeFormTest() {
         // Открываем форму
-        open("https://demoqa.com/automation-practice-form");
+        open("/automation-practice-form");
         // Заполняем имя
         $("#firstName").setValue("Dmitriy");
         // Заполняем фамилию
@@ -26,7 +28,8 @@ public class PracticeFormTests {
         // Заполняем email
         $("#userEmail").setValue("userEmail@gmail.com");
         // Указываем пол
-        $x("//label[contains(text(),'Male')]").click();
+        $("#genterWrapper").$(byText("Male")).click();
+        //$x("//label[contains(text(),'Male')]").click();
         // Заполняем номер телефона
         $("#userNumber").setValue("9876543210");
         // Заполняем дату рождения
@@ -35,16 +38,19 @@ public class PracticeFormTests {
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__year-select").click();
         $(".react-datepicker__year-select").selectOption("1988");
-        $(".react-datepicker__day.react-datepicker__day--005").click();
+        //$(".react-datepicker__day.react-datepicker__day--005:not(.react-datepicker__day--outside-month)").click();
+        $("[aria-label$='June 5th, 1988']").click();
         // Заполняем предмет
         $("#subjectsInput").setValue("Physics").pressEnter();
         $("#subjectsInput").setValue("Maths").pressEnter();
         // Заполняем хобби
-        $("[for='hobbies-checkbox-1']").click();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
+        //$("[for='hobbies-checkbox-1']").click();
         $("[for='hobbies-checkbox-3']").click();
         // Прикрепляем фото
-        File picture = new File("src/test/resources/sketching8.jpg");
-        $("#uploadPicture").uploadFile(picture);
+        //File picture = new File("src/test/resources/img/sketching8.jpg");
+        //$("#uploadPicture").uploadFile(picture);
+        $("#uploadPicture").uploadFromClasspath("img/sketching8.jpg");
         // Заполняем адрес
         $("#currentAddress").setValue("Country City Street number");
         // Заполняем Штат и город
