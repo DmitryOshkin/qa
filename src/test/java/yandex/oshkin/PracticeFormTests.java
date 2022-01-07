@@ -63,6 +63,7 @@ public class PracticeFormTests {
         String pngFileName = screenshot("my_file_name");
         $("#submit").scrollTo().click();
         // Проверяем результат работы формы
+        $(".modal-content").shouldHave(text("Thanks for submitting the form"));
         $("[class='modal-body']").shouldHave(
                 text("Dmitriy Oshkin"),
                 text("userEmail@gmail.com"),
