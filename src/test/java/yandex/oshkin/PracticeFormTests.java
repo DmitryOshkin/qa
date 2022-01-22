@@ -4,8 +4,6 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -75,9 +73,8 @@ public class PracticeFormTests {
                 text("sketching8.jpg"),
                 text("Country City Street number"),
                 text("Haryana Panipat"));
+        // $(".table-responsive").$(byText("Student Name"))
+        //                .parent().shouldHave(text("Dmitriy Oshkin"));
         String pngFileName2 = screenshot("my_file_name2");
-
-
     }
-
 }
