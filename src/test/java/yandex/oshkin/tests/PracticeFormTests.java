@@ -1,17 +1,21 @@
 package yandex.oshkin.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import yandex.oshkin.pages.RegistrationPage;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-
 public class PracticeFormTests {
 
     RegistrationPage registrationPage = new RegistrationPage();
+
+    Faker faker = new Faker();
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String userEmail = faker.internet().emailAddress();
+    String address = faker.address().fullAddress();
+    String phoneNumber = faker.number().digits(10);
 
     @BeforeAll
     static void beforeAll() {
@@ -23,32 +27,32 @@ public class PracticeFormTests {
     void fillPracticeFormTest() {
         registrationPage
                 .openPage()
-                .typeFirstName("Dmitriy")
-                .typeLastName("Oshkin")
-                .typeUserEmail("userEmail@gmail.com")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
                 .selectGender("Male")
-                .setPhoneNumber("9876543210")
+                .setPhoneNumber(phoneNumber)
                 .setBirthDate("05", "June", "1988")
                 .setSubject("Physics")
                 .setSubject("Maths")
-                .setHobbies("Sports")
-                .setHobbies("Music")
+                .selectHobbies("Sports")
+                .selectHobbies("Music")
                 .uploadPicture("img/sketching8.jpg")
-                .setAddress("Country City Street number")
+                .setAddress(address)
                 .selectState("Haryana")
                 .selectCity("Panipat")
                 .clickSubmit()
                 .takeScreenshot("my_file_name")
-                .checkResultsText("Thanks for submitting the form")
-                .checkResultsValue("Student Name", "Dmitriy Oshkin")
-                .checkResultsValue("Student Email", "userEmail@gmail.com")
+                .checkResultsFormHeaderText("Thanks for submitting the form")
+                .checkResultsValue("Student Name", firstName + " " + lastName)
+                .checkResultsValue("Student Email", userEmail)
                 .checkResultsValue("Gender", "Male")
-                .checkResultsValue("Mobile", "9876543210")
+                .checkResultsValue("Mobile", phoneNumber)
                 .checkResultsValue("Date of Birth", "05 June,1988")
                 .checkResultsValue("Subjects", "Physics, Maths")
                 .checkResultsValue("Hobbies", "Sports, Music")
                 .checkResultsValue("Picture", "sketching8.jpg")
-                .checkResultsValue("Address", "Country City Street number")
+                .checkResultsValue("Address", address)
                 .checkResultsValue("State and City", "Haryana Panipat")
                 .takeScreenshot("my_file_name2");
     }

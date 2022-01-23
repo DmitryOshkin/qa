@@ -34,17 +34,17 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage typeFirstName(String value) {
+    public RegistrationPage setFirstName(String value) {
         firstNameInput.setValue(value);
         return this;
     }
 
-    public RegistrationPage typeLastName(String value) {
+    public RegistrationPage setLastName(String value) {
         lastNameInput.setValue(value);
         return this;
     }
 
-    public RegistrationPage typeUserEmail(String value) {
+    public RegistrationPage setUserEmail(String value) {
         userEmailInput.setValue(value);
         return this;
     }
@@ -69,7 +69,7 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setHobbies(String value) {
+    public RegistrationPage selectHobbies(String value) {
         hobbiesInput.$(byText(value)).click();
         return this;
     }
@@ -104,7 +104,7 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage checkResultsText(String value) {
+    public RegistrationPage checkResultsFormHeaderText(String value) {
         resultFormHeaderText.shouldHave(text(value));
         return this;
     }
