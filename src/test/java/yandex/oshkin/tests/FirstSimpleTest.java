@@ -1,4 +1,4 @@
-package yandex.oshkin;
+package yandex.oshkin.tests;
 
 import org.junit.jupiter.api.*;
 
