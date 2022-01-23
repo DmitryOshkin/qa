@@ -30,27 +30,16 @@ public class PracticeFormTests {
                 .setPhoneNumber("9876543210")
                 .setBirthDate("05", "June", "1988")
                 .setSubject("Physics")
-                .setSubject("Maths");
-        // Заполняем хобби
-        $("#hobbiesWrapper").$(byText("Sports")).click();
-        //$("[for='hobbies-checkbox-1']").click();
-        $("[for='hobbies-checkbox-3']").click();
-        // Прикрепляем фото
-        //File picture = new File("src/test/resources/img/sketching8.jpg");
-        //$("#uploadPicture").uploadFile(picture);
-        $("#uploadPicture").uploadFromClasspath("img/sketching8.jpg");
-        // Заполняем адрес
-        $("#currentAddress").setValue("Country City Street number");
-        // Заполняем Штат и город
-        $("#react-select-3-input").setValue("Haryana").pressEnter();
-        $("#city").scrollTo().click();
-        $("#stateCity-wrapper").$(byText("Panipat")).click();
-        //$("#react-select-4-input").setValue("Panipat").pressEnter();
-        String pngFileName = screenshot("my_file_name");
-        $("#submit").scrollTo().click();
-        // Проверяем результат работы формы
-        $(".modal-content").shouldHave(text("Thanks for submitting the form"));
-        registrationPage
+                .setSubject("Maths")
+                .setHobbies("Sports")
+                .setHobbies("Music")
+                .uploadPicture("img/sketching8.jpg")
+                .setAddress("Country City Street number")
+                .selectState("Haryana")
+                .selectCity("Panipat")
+                .clickSubmit()
+                .takeScreenshot("my_file_name")
+                .checkResultsText("Thanks for submitting the form")
                 .checkResultsValue("Student Name", "Dmitriy Oshkin")
                 .checkResultsValue("Student Email", "userEmail@gmail.com")
                 .checkResultsValue("Gender", "Male")
@@ -60,7 +49,7 @@ public class PracticeFormTests {
                 .checkResultsValue("Hobbies", "Sports, Music")
                 .checkResultsValue("Picture", "sketching8.jpg")
                 .checkResultsValue("Address", "Country City Street number")
-                .checkResultsValue("State and City", "Haryana Panipat");
-        String pngFileName2 = screenshot("my_file_name2");
+                .checkResultsValue("State and City", "Haryana Panipat")
+                .takeScreenshot("my_file_name2");
     }
 }

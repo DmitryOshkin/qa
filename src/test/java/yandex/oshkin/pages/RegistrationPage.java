@@ -5,20 +5,25 @@ import yandex.oshkin.pages.components.CalendarComponent;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationPage {
 
     SelenideElement
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
-            resultsTable = $(".table-responsive"),
             userEmailInput = $("#userEmail"),
             genderInput = $("#genterWrapper"),
             userNumberInput = $("#userNumber"),
-            subjectsInput = $("#subjectsInput")
-    ;
+            subjectsInput = $("#subjectsInput"),
+            hobbiesInput = $("#hobbiesWrapper"),
+            pictureInput = $("#uploadPicture"),
+            addressInput = $("#currentAddress"),
+            stateSelect = $("#react-select-3-input"),
+            citySelect = $("#react-select-4-input"),
+            submitButton = $("#submit"),
+            resultFormHeaderText = $(".modal-content"),
+            resultsTable = $(".table-responsive");
 
     public CalendarComponent calendarComponent = new CalendarComponent();
 
@@ -61,6 +66,46 @@ public class RegistrationPage {
 
     public RegistrationPage setSubject(String value) {
         subjectsInput.setValue(value).pressEnter();
+        return this;
+    }
+
+    public RegistrationPage setHobbies(String value) {
+        hobbiesInput.$(byText(value)).click();
+        return this;
+    }
+
+    public RegistrationPage uploadPicture(String fileName) {
+        pictureInput.uploadFromClasspath(fileName);
+        return this;
+    }
+
+    public RegistrationPage setAddress(String value) {
+        addressInput.setValue(value);
+        return this;
+    }
+
+    public RegistrationPage selectState(String value) {
+        stateSelect.setValue(value).pressEnter();
+        return this;
+    }
+
+    public RegistrationPage selectCity(String value) {
+        citySelect.setValue(value).pressEnter();
+        return this;
+    }
+
+    public RegistrationPage clickSubmit() {
+        submitButton.scrollTo().click();
+        return this;
+    }
+
+    public RegistrationPage takeScreenshot(String value) {
+        String pngFileName = screenshot(value);
+        return this;
+    }
+
+    public RegistrationPage checkResultsText(String value) {
+        resultFormHeaderText.shouldHave(text(value));
         return this;
     }
 
