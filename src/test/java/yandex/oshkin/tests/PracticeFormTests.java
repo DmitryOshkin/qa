@@ -41,8 +41,8 @@ public class PracticeFormTests {
                 .setAddress(address)
                 .selectState("Haryana")
                 .selectCity("Panipat")
-                .clickSubmit()
-                .takeScreenshot("my_file_name")
+                .clickSubmit();
+        registrationPage
                 .checkResultsFormHeaderText("Thanks for submitting the form")
                 .checkResultsValue("Student Name", firstName + " " + lastName)
                 .checkResultsValue("Student Email", userEmail)
@@ -53,7 +53,6 @@ public class PracticeFormTests {
                 .checkResultsValue("Hobbies", "Sports, Music")
                 .checkResultsValue("Picture", "sketching8.jpg")
                 .checkResultsValue("Address", address)
-                .checkResultsValue("State and City", "Haryana Panipat")
-                .takeScreenshot("my_file_name2");
+                .checkResultsValue("State and City", "Haryana Panipat");
     }
 }

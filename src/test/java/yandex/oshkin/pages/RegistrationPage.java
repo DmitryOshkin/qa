@@ -99,11 +99,6 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage takeScreenshot(String value) {
-        String pngFileName = screenshot(value);
-        return this;
-    }
-
     public RegistrationPage checkResultsFormHeaderText(String value) {
         resultFormHeaderText.shouldHave(text(value));
         return this;
