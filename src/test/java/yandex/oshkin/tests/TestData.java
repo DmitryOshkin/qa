@@ -17,9 +17,11 @@ public class TestData extends TestBase {
             hobbie_1 = "Sports",
             hobbie_2 = "Music",
             picture = "sketching8.jpg",
+            picturePath = "src/test/resources/img/",
             address = "City, Street, house , app ",
             state = "Haryana",
             city = "Panipat";
+
 
     public static String
             randomFirstName = faker.name().firstName(),

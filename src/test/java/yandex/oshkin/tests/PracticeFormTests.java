@@ -2,6 +2,7 @@ package yandex.oshkin.tests;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
@@ -14,7 +15,7 @@ public class PracticeFormTests extends TestBase {
                          String day, String month, String year,
                          String subject_1, String subject_2,
                          String hobbie_1, String hobbie_2,
-                         // String picture,
+                         String picture,
                          String address,
                          String state, String city) {
         registrationPage
@@ -30,7 +31,7 @@ public class PracticeFormTests extends TestBase {
                 .setSubject(subject_2)
                 .selectHobbies(hobbie_1)
                 .selectHobbies(hobbie_2)
-                //.uploadPicture("img/" + picture)
+                .uploadFile(picturePath + picture)
                 .setAddress(address)
                 .selectState(state)
                 .selectCity(city)
@@ -44,7 +45,7 @@ public class PracticeFormTests extends TestBase {
                                 String day, String month, String year,
                                 String subject_1, String subject_2,
                                 String hobbie_1, String hobbie_2,
-                                // String picture,
+                                String picture,
                                 String address,
                                 String state, String city) {
         registrationPage
@@ -56,12 +57,13 @@ public class PracticeFormTests extends TestBase {
                 .checkResultsValue("Date of Birth", day + " " + month + "," + year) //"05 June,1988"
                 .checkResultsValue("Subjects", subject_1 + ", " + subject_2)
                 .checkResultsValue("Hobbies", hobbie_1 + ", " + hobbie_2)
-                // .checkResultsValue("Picture", picture)
+                .checkResultsValue("Picture", picture)
                 .checkResultsValue("Address", address)
                 .checkResultsValue("State and City", state + " " + city); //Haryana Panipat
     }
 
     @Test
+    @Tag("randomValues")
     @Owner("OshkinDmitrii")
     @Feature("Forms")
     @Story("Заполнение Student Registration Form отдельными шагами")
@@ -79,6 +81,7 @@ public class PracticeFormTests extends TestBase {
                 subject_1, subject_2,
                 hobbie_1,
                 hobbie_2,
+                picture,
                 randomAddress,
                 state, city);
         checkResultForm("Thanks for submitting the form",
@@ -89,6 +92,7 @@ public class PracticeFormTests extends TestBase {
                 day, month, year,
                 subject_1, subject_2,
                 hobbie_1, hobbie_2,
+                picture,
                 randomAddress,
                 state, city);
 
@@ -96,6 +100,7 @@ public class PracticeFormTests extends TestBase {
 
 
     @Test
+    @Tag("exactValues")
     @DisplayName("Заполнение Student Registration Form с использованием и аннотаций, лямбда шагов и лиссенера для отчета")
     void fillPracticeFormBlockTest() {
 
@@ -115,6 +120,7 @@ public class PracticeFormTests extends TestBase {
                     subject_1, subject_2,
                     hobbie_1,
                     hobbie_2,
+                    picture,
                     address,
                     state, city);
         });
@@ -127,12 +133,14 @@ public class PracticeFormTests extends TestBase {
                     day, month, year,
                     subject_1, subject_2,
                     hobbie_1, hobbie_2,
+                    picture,
                     address,
                     state, city);
         });
     }
 
     @Test
+    @Tag("randomValues")
     @DisplayName("Заполнение Student Registration Form с использованием и аннотаций и лиссенера для отчета")
     void fillPracticeFormListenerTest() {
 
@@ -151,6 +159,7 @@ public class PracticeFormTests extends TestBase {
                 subject_1, subject_2,
                 hobbie_1,
                 hobbie_2,
+                picture,
                 randomAddress,
                 state, city);
         checkResultForm("Thanks for submitting the form",
@@ -161,6 +170,7 @@ public class PracticeFormTests extends TestBase {
                 day, month, year,
                 subject_1, subject_2,
                 hobbie_1, hobbie_2,
+                picture,
                 randomAddress,
                 state, city);
 

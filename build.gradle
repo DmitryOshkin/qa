@@ -55,6 +55,10 @@ dependencies {
 
 tasks.withType(Test) {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
+
+//    systemProperty("browser", "safari")
+//    systemProperty("environment", System.getProperty("environment", "stage")) // preprod, prod, stage
 
     testLogging {
         lifecycle {
@@ -62,5 +66,17 @@ tasks.withType(Test) {
             events "started", "skipped", "failed", "standard_error", "standard_out"
             exceptionFormat "short"
         }
+    }
+}
+
+task test_randomValues(type: Test) {
+    useJUnitPlatform {
+        includeTags "randomValues"
+    }
+
+}
+task test_exactValues(type: Test) {
+    useJUnitPlatform {
+        includeTags "exactValues"
     }
 }

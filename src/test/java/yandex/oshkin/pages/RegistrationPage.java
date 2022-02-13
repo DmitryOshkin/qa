@@ -4,6 +4,8 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import yandex.oshkin.pages.components.CalendarComponent;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -81,13 +83,19 @@ public class RegistrationPage {
 
     @Step("Выбираем хобби")
     public RegistrationPage selectHobbies(String value) {
-        hobbiesInput.$(byText(value)).click();
+        hobbiesInput.$(byText(value)).scrollTo().click();
         return this;
     }
 
     @Step("Загружаем картинку")
     public RegistrationPage uploadPicture(String fileName) {
         pictureInput.uploadFromClasspath(fileName);
+        return this;
+    }
+    @Step("Загружаем файл {file}")
+    public RegistrationPage uploadFile(String file) {
+        File cat = new File(file);
+        pictureInput.uploadFile(cat);
         return this;
     }
 
