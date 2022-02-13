@@ -39,7 +39,7 @@ compileTestJava {
 
 dependencies {
     //Selenide
-    testImplementation("com.codeborne:selenide:6.2.1")
+    testImplementation("com.codeborne:selenide:5.25.1") //6.2.1
     testRuntimeOnly("org.slf4j:slf4j-simple:1.7.32")
 
     //JUnit 5
