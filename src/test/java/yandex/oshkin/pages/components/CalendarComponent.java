@@ -1,10 +1,13 @@
 package yandex.oshkin.pages.components;
 
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.String.format;
 
 public class CalendarComponent {
 
+    @Step("Выбор даты")
     public void setDate(String day, String month, String year) {
 
         // Заполняем дату рождения

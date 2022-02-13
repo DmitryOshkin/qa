@@ -1,110 +1,102 @@
 package yandex.oshkin.tests;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import com.github.javafaker.Faker;
-import io.qameta.allure.Allure;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.selenide.AllureSelenide;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import yandex.oshkin.pages.RegistrationPage;
 
 import static io.qameta.allure.Allure.step;
+import static yandex.oshkin.tests.TestData.*;
 
 public class PracticeFormTests extends TestBase {
 
-    RegistrationPage registrationPage = new RegistrationPage();
-
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String userEmail = faker.internet().emailAddress();
-    String address = faker.address().fullAddress();
-    String phoneNumber = faker.number().digits(10);
-
-    public void checkResultForm(String male) {
+    public void fillForm(String firstName, String lastName, String email, String gender,
+                         String phoneNumber,
+                         String day, String month, String year,
+                         String subject_1, String subject_2,
+                         String hobbie_1, String hobbie_2,
+                         // String picture,
+                         String address,
+                         String state, String city) {
         registrationPage
-                .checkResultsFormHeaderText("Thanks for submitting the form")
+                .openPage();
+        registrationPage
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(email)
+                .selectGender(gender)
+                .setPhoneNumber(phoneNumber)
+                .setBirthDate(day, month, year)
+                .setSubject(subject_1)
+                .setSubject(subject_2)
+                .selectHobbies(hobbie_1)
+                .selectHobbies(hobbie_2)
+                //.uploadPicture("img/" + picture)
+                .setAddress(address)
+                .selectState(state)
+                .selectCity(city)
+                .clickSubmit();
+    }
+
+    public void checkResultForm(String header,
+                                String firstName, String lastName,
+                                String email, String gender,
+                                String phoneNumber,
+                                String day, String month, String year,
+                                String subject_1, String subject_2,
+                                String hobbie_1, String hobbie_2,
+                                // String picture,
+                                String address,
+                                String state, String city) {
+        registrationPage
+                .checkResultsFormHeaderText(header)
                 .checkResultsValue("Student Name", firstName + " " + lastName)
-                .checkResultsValue("Student Email", userEmail)
-                .checkResultsValue("Gender", male)
+                .checkResultsValue("Student Email", email)
+                .checkResultsValue("Gender", gender)
                 .checkResultsValue("Mobile", phoneNumber)
-                .checkResultsValue("Date of Birth", "05 June,1988")
-                .checkResultsValue("Subjects", "Physics, Maths")
-                .checkResultsValue("Hobbies", "Sports, Music")
-               // .checkResultsValue("Picture", "sketching8.jpg")
+                .checkResultsValue("Date of Birth", day + " " + month + "," + year) //"05 June,1988"
+                .checkResultsValue("Subjects", subject_1 + ", " + subject_2)
+                .checkResultsValue("Hobbies", hobbie_1 + ", " + hobbie_2)
+                // .checkResultsValue("Picture", picture)
                 .checkResultsValue("Address", address)
-                .checkResultsValue("State and City", "Haryana Panipat");
+                .checkResultsValue("State and City", state + " " + city); //Haryana Panipat
     }
 
     @Test
+    @Owner("OshkinDmitrii")
+    @Feature("Forms")
+    @Story("Заполнение Student Registration Form отдельными шагами")
+    @DisplayName("Заполнение Student Registration Form с использованием аннотаций и лиссенера по умолчанию для отчета")
+    @Severity(SeverityLevel.NORMAL)
+    @Link(value = "demoqa", url = "https://demoqa.com/")
     void fillPracticeFormStepsTest() {
 
-        Allure.label("owner", "OshkinDmitrii");
-        Allure.feature("Forms");
-        Allure.story("Заполнение Student Registration Form отдельными шагами");
-        Allure.label("severity", SeverityLevel.NORMAL.value());
-        Allure.link("demoqa", "https://demoqa.com/");
+        fillForm(randomFirstName,
+                randomLastName,
+                randomUserEmail,
+                maleGender,
+                randomPhoneNumber,
+                day, month, year,
+                subject_1, subject_2,
+                hobbie_1,
+                hobbie_2,
+                randomAddress,
+                state, city);
+        checkResultForm("Thanks for submitting the form",
+                randomFirstName, randomLastName,
+                randomUserEmail,
+                maleGender,
+                randomPhoneNumber,
+                day, month, year,
+                subject_1, subject_2,
+                hobbie_1, hobbie_2,
+                randomAddress,
+                state, city);
 
-
-        step("Открываем страницу заполнения регистрационной формы студентов", () -> {
-            registrationPage
-                    .openPage();
-        });
-        step("Заполняем имя студента", () -> {
-            registrationPage
-                    .setFirstName(firstName)
-                    .setLastName(lastName);
-        });
-        step("Заполняем электронный адрес студента", () -> {
-            registrationPage
-                    .setUserEmail(userEmail);
-        });
-        step("Выбираем пол студента", () -> {
-            registrationPage
-                    .selectGender("Male");
-        });
-        step("Заполняем номер телефона", () -> {
-            registrationPage
-                    .setPhoneNumber(phoneNumber);
-        });
-        step("Заполняем дату рождения", () -> {
-            registrationPage
-                    .setBirthDate("05", "June", "1988");
-        });
-        step("Вводим предметы", () -> {
-            registrationPage
-                    .setSubject("Physics")
-                    .setSubject("Maths");
-        });
-        step("Выбираем хобби", () -> {
-            registrationPage
-                    .selectHobbies("Sports")
-                    .selectHobbies("Music");
-        });
-//        step("Прикрепляем картинку", () -> {
-//            registrationPage
-//                    .uploadPicture("img/sketching8.jpg");
-//        });
-        step("Заполняем Адрес", () -> {
-            registrationPage
-                    .setAddress(address);
-        });
-        step("Выбираем штат и город", () -> {
-            registrationPage
-                    .selectState("Haryana")
-                    .selectCity("Panipat");
-        });
-        step("Завершаем заполнение формы", () -> {
-            registrationPage
-                    .clickSubmit();
-        });
-        step("Проверяем корректность заполнения формы", () -> {
-            checkResultForm("Male");
-        });
     }
 
 
     @Test
+    @DisplayName("Заполнение Student Registration Form с использованием и аннотаций, лямбда шагов и лиссенера для отчета")
     void fillPracticeFormBlockTest() {
 
         Allure.label("owner", "OshkinDmitrii");
@@ -114,30 +106,34 @@ public class PracticeFormTests extends TestBase {
         Allure.link("demoqa", "https://demoqa.com/");
 
         step("Открываем форму регистрации и заполняем данные о студенте", () -> {
-            registrationPage
-                    .openPage()
-                    .setFirstName(firstName)
-                    .setLastName(lastName)
-                    .setUserEmail(userEmail)
-                    .selectGender("Male")
-                    .setPhoneNumber(phoneNumber)
-                    .setBirthDate("05", "June", "1988")
-                    .setSubject("Physics")
-                    .setSubject("Maths")
-                    .selectHobbies("Sports")
-                    .selectHobbies("Music")
-                    //.uploadPicture("img/sketching8.jpg")
-                    .setAddress(address)
-                    .selectState("Haryana")
-                    .selectCity("Panipat")
-                    .clickSubmit();
+            fillForm(firstName,
+                    lastName,
+                    email,
+                    maleGender,
+                    phone,
+                    day, month, year,
+                    subject_1, subject_2,
+                    hobbie_1,
+                    hobbie_2,
+                    address,
+                    state, city);
         });
         step("Проверяем корректность заполнения формы", () -> {
-            checkResultForm("Male");
+            checkResultForm("Thanks for submitting the form",
+                    firstName, lastName,
+                    email,
+                    maleGender,
+                    phone,
+                    day, month, year,
+                    subject_1, subject_2,
+                    hobbie_1, hobbie_2,
+                    address,
+                    state, city);
         });
     }
 
     @Test
+    @DisplayName("Заполнение Student Registration Form с использованием и аннотаций и лиссенера для отчета")
     void fillPracticeFormListenerTest() {
 
         Allure.label("owner", "OshkinDmitrii");
@@ -146,27 +142,27 @@ public class PracticeFormTests extends TestBase {
         Allure.label("severity", SeverityLevel.CRITICAL.value());
         Allure.link("demoqa", "https://demoqa.com/");
 
-        SelenideLogger.addListener("allure", new AllureSelenide());
-
-        registrationPage
-                .openPage()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setUserEmail(userEmail)
-                .selectGender("Male")
-                .setPhoneNumber(phoneNumber)
-                .setBirthDate("05", "June", "1988")
-                .setSubject("Physics")
-                .setSubject("Maths")
-                .selectHobbies("Sports")
-                .selectHobbies("Music")
-               // .uploadPicture("img/sketching8.jpg")
-                .setAddress(address)
-                .selectState("Haryana")
-                .selectCity("Panipat")
-                .clickSubmit();
-
-        checkResultForm("Female");
+        fillForm(randomFirstName,
+                randomLastName,
+                randomUserEmail,
+                maleGender,
+                randomPhoneNumber,
+                day, month, year,
+                subject_1, subject_2,
+                hobbie_1,
+                hobbie_2,
+                randomAddress,
+                state, city);
+        checkResultForm("Thanks for submitting the form",
+                randomFirstName, randomLastName,
+                randomUserEmail,
+                femaleGender,
+                randomPhoneNumber,
+                day, month, year,
+                subject_1, subject_2,
+                hobbie_1, hobbie_2,
+                randomAddress,
+                state, city);
 
     }
 }
